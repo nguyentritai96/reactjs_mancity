@@ -1,0 +1,1 @@
+export const homepage = 'http://baihocnganvang.000webhostapp.com/mancity' 
