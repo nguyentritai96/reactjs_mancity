@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { firebaseMatches } from '../../firebase';
 import { firebaseLooper, reverseArray } from '../ui/misc';
@@ -31,7 +30,7 @@ class TheMatches extends Component {
 
     showPlayed = (played) => {
         const list = this.state.matches.filter((match)=>{
-            return match.final === played
+            return match.final === played // played sẽ có 2 giá trị : yes hoặc no
         });
         
         this.setState({
@@ -81,6 +80,7 @@ class TheMatches extends Component {
                                     </div>
                                 </div>
                             </div>
+
                             <div className="match_filters_box">
                                 <div className="tag">
                                     Result game
@@ -105,6 +105,7 @@ class TheMatches extends Component {
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                         <MatchesList matches={state.filterMatches}/>
                     </div>

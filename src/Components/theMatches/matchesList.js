@@ -1,88 +1,101 @@
 import React, { Component } from 'react';
+
 import { easePolyOut } from 'd3-ease';
 import NodeGroup from 'react-move/NodeGroup';
 
 class MatchesList extends Component {
 
     state = {
-        matcheslist:[]
+        matcheslist: []
     }
 
-    static getDerivedStateFromProps(props,state){
+    static getDerivedStateFromProps(props, state) {
         return state = {
             matcheslist: props.matches
         }
     }
 
-
     showMatches = () => (
-        this.state.matcheslist ?
+        (this.state.matcheslist) ?
             <NodeGroup
-                data={this.state.matcheslist}
-                keyAccessor={(d)=> d.id}
+                data={this.state.matcheslist} // dữ liệu phải là một mảng
+                keyAccessor={(d) => d.id} // khai báo khóa chính
 
-                start={()=>({
-                    opacity:0,
-                    x:-200
+                start={() => ({
+                    opacity: 0,
+                    x: -200
                 })}
 
-                enter={(d,i)=>({
-                    opacity:[1],
-                    x:[0],
-                    timing:{duration: 500, delay: i * 50, ease: easePolyOut}
+                enter={(d, i) => ({
+                    opacity: [1],
+                    x: [0],
+                    timing: { duration: 500, delay: i * 50, ease: easePolyOut }
                 })}
 
-                update={(d,i)=>({
-                    opacity:[1],
-                    x:[0],
-                    timing:{duration: 500, delay: i * 50, ease: easePolyOut}
+                update={(d, i) => ({
+                    opacity: [1],
+                    x: [0],
+                    timing: { duration: 500, delay: i * 50, ease: easePolyOut }
                 })}
 
-                leave={(d,i)=>({
-                    opacity:[0],
-                    x:[-200],
-                    timing:{duration: 500, delay: i * 50, ease: easePolyOut}
+                leave={(d, i) => ({
+                    opacity: [0],
+                    x: [-200],
+                    timing: { duration: 500, delay: i * 50, ease: easePolyOut }
                 })}
             >
-                {(nodes)=>(
+                {(nodes) => (
                     <div>
-                        { nodes.map(({key, data, state:{ x, opacity}})=>(
-                            <div 
-                                key={key} 
+                        {nodes.map(({ key, data, state: { x, opacity } }) => (
+                            <div
+                                key={key}
                                 className="match_box_big"
                                 style={{
                                     opacity,
                                     transform: `translate(${x}px)`
                                 }}
                             >
-                                <div className="block_wraper">
-                                    <div className="block">
-                                        <div 
-                                            className="icon" 
-                                            style={{background:`url(/images/team_icons/${data.localThmb}.png)`}}></div>
-                                        <div className="team">{data.local}</div>
-                                        <div className="result">{data.resultLocal}</div>
-                                    </div>
-                                    <div className="block">
-                                        <div 
-                                            className="icon" 
-                                            style={{background:`url(/images/team_icons/${data.awayThmb}.png)`}}></div>
-                                        <div className="team">{data.away}</div>
-                                        <div className="result">{data.resultAway}</div>
-                                    </div>
-                                </div>
-                                <div className="block_wraper nfo">
-                                    <div><strong>Date:</strong> {data.date}</div>
-                                    <div><strong>Stadium:</strong> {data.stadium}</div>
-                                    <div><strong>Referee:</strong> {data.referee}</div>
-                                </div>
+                                <table>
+                                    <tr>
+                                        <td width='375px'>
+                                            <div className="block_wraper">
+
+                                                <div className="block">
+                                                    <div
+                                                        className="icon"
+                                                        style={{ background: `url(/images/team_icons/${data.localThmb}.png)` }}>
+                                                    </div>
+                                                    <div className="team">{data.local}</div>
+                                                    <div className="result">{data.resultLocal}</div>
+                                                </div>
+
+                                                <div className="block">
+                                                    <div
+                                                        className="icon"
+                                                        style={{ background: `url(/images/team_icons/${data.awayThmb}.png)` }}>
+                                                    </div>
+                                                    <div className="team">{data.away}</div>
+                                                    <div className="result">{data.resultAway}</div>
+                                                </div>
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div className="block_wraper nfo">
+                                                <div><strong>Date:</strong> {data.date}</div>
+                                                <div><strong>Stadium:</strong> {data.stadium}</div>
+                                                <div><strong>Referee:</strong> {data.referee}</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
                         ))}
                     </div>
                 )}
 
             </NodeGroup>
-        :null
+            : null
     )
 
 

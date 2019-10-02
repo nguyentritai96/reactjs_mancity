@@ -17,7 +17,7 @@ class TheTeam extends Component {
     componentDidMount(){
         firebasePlayers.once('value').then(snapshot =>{
             const players = firebaseLooper(snapshot);
-            let promises = [];
+            let promises = []; // kĩ thuật tạo mảng promise
             
             // eslint-disable-next-line no-unused-vars
             for(let key in players){

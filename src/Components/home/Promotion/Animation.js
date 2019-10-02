@@ -1,5 +1,5 @@
 import React from 'react';
-import Zoom from 'react-reveal/Zoom'
+import Zoom from 'react-reveal/Zoom';
 import Jersey from '../../../Resources/images/jersey.jpg';
 
 const PromotionAnimation = () => {

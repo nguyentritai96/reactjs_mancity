@@ -6,9 +6,21 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 class Fileuploader extends Component {
 
     state = {
-        name:'',
-        isUploading:false,
-        fileURL:''
+        isUploading:false, // quản lí tiến trình
+        name:'', // tên file hình lưu trên storage
+        fileURL:'' // lưu lại url của hình
+    }
+
+    // Các động thái: đổ dữ liệu hình đã có, up hình mới, xóa hình đã up
+
+    static getDerivedStateFromProps(props,state){ // 1. đổ dữ liệu hình đã có
+        if(props.defaultImg){ // nếu có link url
+            return state = { // đổi state của component
+                name:props.defaultImgName,
+                fileURL:props.defaultImg
+            }
+        }
+        return null
     }
 
     handleUploadStart = () => {
@@ -21,10 +33,9 @@ class Fileuploader extends Component {
         this.setState({
             isUploading:false
         })
-     }
+    }
 
-    handleUploadSuccess = (filename) => {
-        console.log(filename)
+    handleUploadSuccess = (filename) => { //2. up hình mới
         this.setState({
             name:filename,
             isUploading:false
@@ -34,25 +45,13 @@ class Fileuploader extends Component {
         .child(filename).getDownloadURL()
         .then( url => {
             this.setState({fileURL: url })
-        })
+        }) // lấy link url
 
-        this.props.filename(filename)
+        this.props.filename(filename) // lưu tên vào image của formdata
 
-     }
-
-
-    static getDerivedStateFromProps(props,state){
-        if(props.defaultImg){
-            return state = { // đổi state của component
-                name:props.defaultImgName,
-                fileURL:props.defaultImg
-            }
-        }
-        return null
     }
 
-
-    uploadAgain = () => {
+    uploadAgain = () => { //3. xóa hình đã up
         this.setState({
             name:'',
             isUploading:false,
@@ -64,7 +63,7 @@ class Fileuploader extends Component {
     render() {
         return (
             <div>
-                { !this.state.fileURL ?
+                { !this.state.fileURL ? // nếu chưa có hình
                     <div>
                         <div className="label_inputs">{this.props.tag}</div>
                         <FileUploader
@@ -90,7 +89,7 @@ class Fileuploader extends Component {
                     </div>
                 :null
                 }
-                { this.state.fileURL ?
+                { this.state.fileURL ? // nếu có hình
                     <div className="image_upload_container">
                         <img
                             style={{

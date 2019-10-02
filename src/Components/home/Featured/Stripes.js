@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import { easePolyOut } from 'd3-ease';
 import Animate from 'react-move/Animate';
 
@@ -8,22 +9,22 @@ class Stripes extends Component {
             {
                 backgroundColor:'#98c5e9',
                 left: 120,
-                rotate: 25,
                 top: -260 ,
+                rotate: 25,
                 delay: 0
             },
             {
                 backgroundColor:'#ffffff',
                 left: 360,
-                rotate: 25,
                 top: -397,
+                rotate: 25,
                 delay: 400
             },
             {
                 backgroundColor:'#98c5e9',
                 left: 600,
-                rotate: 25,
                 top: -498,
+                rotate: 25,
                 delay: 800
             }
         ]
@@ -34,7 +35,6 @@ class Stripes extends Component {
             <Animate
                 key={i}
                 show={true}
-
                 start={{
                     backgroundColor:'#ffffff',
                     opacity:0,
@@ -42,27 +42,23 @@ class Stripes extends Component {
                     rotate:0,
                     top:0
                 }}
-
                 enter={{
                     backgroundColor: stripe.backgroundColor,
                     opacity:[1],
-                    left:[stripe.left],
-                    rotate:[stripe.rotate],
-                    top:[stripe.top],
-                    timing: {delay:stripe.delay, duration: 200, ease: easePolyOut}, //
-                    events:{
-                        end(){
+                    left: [stripe.left],
+                    rotate: [stripe.rotate],
+                    top: [stripe.top],
+                    timing: {delay:stripe.delay, duration: 300, ease: easePolyOut},
+                    events:{ end() {
                            // console.log('animation finished')
-                        }
-                    }
+                    }}
                 }}
 
             >
-                {({ opacity,left,rotate,top,backgroundColor})=>{
+                {({ opacity,left,rotate,top,backgroundColor })=>{
                     return(
-                        <div
-                            className="stripe"
-                            style={{
+                        <div className="stripe"
+                             style={{
                                 backgroundColor,
                                 opacity,
                                 transform: `rotate(${rotate}deg) translate(${left}px,${top}px)`

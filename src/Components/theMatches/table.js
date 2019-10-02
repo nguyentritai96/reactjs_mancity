@@ -27,7 +27,6 @@ class LeagueTable extends Component {
     componentDidMount(){
         firebaseDB.ref('positions').once('value').then((snapshot) => {
             const positions = firebaseLooper(snapshot);
-
             this.setState({
                 positions: positions
             })
@@ -40,7 +39,7 @@ class LeagueTable extends Component {
             pos.map((pos,i)=>(
                 <TableRow key={i}>
                     <TableCell style={style.cell}>{i+1}</TableCell>
-                    <TableCell style={style.cell}>{pos.team}</TableCell>
+                    <TableCell style={{...style.cell, textAlign : 'left'}}>{pos.team}</TableCell>
                     <TableCell numeric style={style.cell}>{pos.w}</TableCell>
                     <TableCell numeric style={style.cell}>{pos.d}</TableCell>
                     <TableCell numeric style={style.cell}>{pos.l}</TableCell>
@@ -65,7 +64,7 @@ class LeagueTable extends Component {
                     <TableHead>
                         <TableRow>
                             <TableCell style={style.cell}>Pos</TableCell>
-                            <TableCell style={style.cell}>Team</TableCell>
+                            <TableCell style={{...style.cell, textAlign : 'left'}}>Team</TableCell>
                             <TableCell style={style.cell}>W</TableCell>
                             <TableCell style={style.cell}>L</TableCell>
                             <TableCell style={style.cell}>D</TableCell>

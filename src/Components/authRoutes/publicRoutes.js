@@ -7,11 +7,11 @@ const PublicRoutes = ({
     ...rest
 }) => {
     return <Route {...rest} component={(props)=>(
-        rest.restricted ?
+        (rest.restricted === true) ? // trường hợp user vào login thì chuyển ra dashboard
             ( user ?
-                <Redirect to="/dashboard"/>
-                :
-                <Comp {...props} user={user}/>
+            <Redirect to="/dashboard"/>
+            :
+            <Comp {...props} user={user}/>
             )
         :
         <Comp {...props} user={user}/>

@@ -16,7 +16,7 @@ export const Tag = (props) => {
         {props.children}
     </div>
 
-    if(props.link){
+    if(props.link === true){
         return (
             <Link to={props.linkto}>
                 {template}
@@ -46,7 +46,7 @@ export const reverseArray = (actualArray) => { // Chuyển vị trí của mản
     return reversedArray;
 }
 
-export const validate = (element) => { // sẽ trả về valid ok or not ok và thông báo
+export const validate = (element) => { // sẽ trả về valid ok/not và thông báo
     let result = [true,''];
 
     if(element.validation.email){
@@ -60,6 +60,5 @@ export const validate = (element) => { // sẽ trả về valid ok or not ok và
         const message = `${!valid ? 'This field is required':''}`;
         result = !valid ? [valid,message]: result;
     }
-
     return result;
 }

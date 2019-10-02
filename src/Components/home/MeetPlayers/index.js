@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+
 import Stripes from '../../../Resources/images/stripes.png';
+
 import { Tag } from '../../ui/misc';
 import Reveal from 'react-reveal/Reveal';
 import HomeCards from './cards';
@@ -30,6 +32,7 @@ class MeetPlayers extends Component {
                                     show={this.state.show}
                                 />
                             </div>
+
                             <div className="home_text_wrapper">
                                 <div>
                                     <Tag 
@@ -43,6 +46,7 @@ class MeetPlayers extends Component {
                                         Meet
                                     </Tag>
                                 </div>
+
                                 <div>
                                     <Tag 
                                     bck="#0e1731" 
@@ -55,6 +59,7 @@ class MeetPlayers extends Component {
                                         The
                                     </Tag>
                                 </div>
+
                                 <div>
                                     <Tag 
                                     bck="#0e1731" 
@@ -67,6 +72,7 @@ class MeetPlayers extends Component {
                                         Players
                                     </Tag>
                                 </div>
+
                                 <div>
                                     <Tag
                                     bck="#ffffff"

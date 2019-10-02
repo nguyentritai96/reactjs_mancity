@@ -1,6 +1,6 @@
 import React from 'react';
 
-const FormField = ({ formdata, id, change }) => {
+const FormField = ({ id, formdata, change }) => {
 
     const showError = () => {
         let errorMessage = <div className="error_label">
@@ -12,9 +12,6 @@ const FormField = ({ formdata, id, change }) => {
         </div>
         return errorMessage
     }
-
-
-
     const renderTemplate = () => {
         let formTemplate = null;
 
@@ -31,7 +28,7 @@ const FormField = ({ formdata, id, change }) => {
                             value={formdata.value}
                             onChange={(event) => change({ event, id })}
                         />
-                        {showError()}    {/* Show valid thông báo */}
+                        {showError()}
                     </div>
                 )
                 break;

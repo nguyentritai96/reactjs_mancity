@@ -14,7 +14,7 @@ class AddEditMatch extends Component {
         formType:'', // add hay edit
         formError: false,
         formSuccess:'',
-        teams:[], // fetch dữ liệu teams từ database
+        teams:[], // fetch dữ liệu teams từ database để chuyển vào select
         formdata:{
             date:{
                 element:'input',
@@ -166,7 +166,7 @@ class AddEditMatch extends Component {
         }
     }
 
-    updateForm(element){
+    updateForm (element) {
         const newFormdata = {...this.state.formdata}
         const newElement = { ...newFormdata[element.id]}
 
@@ -192,8 +192,8 @@ class AddEditMatch extends Component {
         // eslint-disable-next-line no-unused-vars
         for(let key in newFormdata){
             if(match){
-                newFormdata[key].value = match[key];
-                newFormdata[key].valid = true;
+                newFormdata[key].value = match[key]; // đỗ dữ liệu ra input
+                newFormdata[key].valid = true; // chuyển valid về true để submit
             }
             if(key === 'local' || key === 'away'){
                 newFormdata[key].config.options = teamOptions
@@ -202,7 +202,7 @@ class AddEditMatch extends Component {
         
         this.setState({
             matchId,
-            formType:type,
+            formType: type,
             formdata: newFormdata,
             teams
         })
@@ -228,7 +228,7 @@ class AddEditMatch extends Component {
 
 
         if(!matchId){
-                getTeams(false, 'Add Match')
+                getTeams(false, 'Add Match');
         } else { // get data from database
             firebaseDB.ref(`matches/${matchId}`).once('value')
             .then((snapshot)=>{

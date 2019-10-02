@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import { firebaseMatches } from '../../../firebase';
 import { firebaseLooper, reverseArray } from '../../ui/misc';
 
@@ -13,7 +14,7 @@ class Blocks extends Component {
 
     componentDidMount(){
         firebaseMatches.limitToLast(6).once('value').then((snapshot)=>{
-            const matches = firebaseLooper(snapshot); // Chuyển về mảng chứa đối tượng
+            const matches = firebaseLooper(snapshot); // Chuyển đối tượng dữ liệu về mảng dữ liệu chứa đối tượng
             this.setState({
                 matches: reverseArray(matches) // Đảo ngược vị trí để hiện cái mới nhất lên đầu
             });

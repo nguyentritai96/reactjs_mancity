@@ -14,7 +14,7 @@ class AddEditPlayers extends Component {
         formType:'',
         formError: false,
         formSuccess:'',
-        defaultImg:'',
+        defaultImg:'', // link url hình dùng để hiển thị
         formdata:{
             name:{
                 element:'input',
@@ -93,15 +93,41 @@ class AddEditPlayers extends Component {
         }
     }
 
-    updateFields = (player, playerId, formType , defaultImg) =>{
+    componentDidMount(){
+        const playerId = this.props.match.params.id; // lấy ID về
+
+        if(!playerId){
+            this.setState({
+                formType:'Add player'
+            })
+        } else { // đây là edit => gọi đến updateFields
+           firebaseDB.ref(`players/${playerId}`).once('value')
+           .then(snapshot => {
+               const playerData = snapshot.val(); // dữ liệu có tên hình nhưng k có link url
+
+                firebase.storage().ref('players')
+                .child(playerData.image).getDownloadURL()
+                .then( url => {
+                    this.updateFields(playerData,playerId,'Edit player',url)
+                }).catch( e => { // trường hợp không lấy được hình
+                    this.updateFields({
+                        ...playerData,
+                        image:'' // nếu không lấy được url thì image sẽ để rỗng
+                    },playerId,'Edit player','')
+                })
+           })
+        }
+
+    }
+
+    updateFields = (playerData, playerId, formType , defaultImg) =>{
         const newFormdata = { ...this.state.formdata}
 
         // eslint-disable-next-line no-unused-vars
         for(let key in newFormdata){
-            newFormdata[key].value = player[key];
-            newFormdata[key].valid = true
+            newFormdata[key].value = playerData[key]; // đỡ dữ liệu ra form
+            newFormdata[key].valid = true; // set về true để submit
         }
-
         this.setState({
             playerId,
             defaultImg,
@@ -110,35 +136,6 @@ class AddEditPlayers extends Component {
         })
     }
 
-
-    componentDidMount(){
-        const playerId = this.props.match.params.id;
-
-        if(!playerId){
-            this.setState({
-                formType:'Add player'
-            })
-        } else {
-           firebaseDB.ref(`players/${playerId}`).once('value')
-           .then(snapshot => {
-               const playerData = snapshot.val();
-
-                firebase.storage().ref('players')
-                .child(playerData.image).getDownloadURL()
-                .then( url => {
-                    this.updateFields(playerData,playerId,'Edit player',url)
-                }).catch( e => {
-                    this.updateFields({
-                        ...playerData,
-                        image:''
-                    },playerId,'Edit player','')
-                })
-           })
-        }
-
-    }
-
-
     updateForm(element, content = ''){
         const newFormdata = {...this.state.formdata}
         const newElement = { ...newFormdata[element.id]}
@@ -146,7 +143,7 @@ class AddEditPlayers extends Component {
         if(content === ''){
             newElement.value = element.event.target.value;
         } else {
-            newElement.value = content
+            newElement.value = content // trường hợp image
         }
         
         let validData = validate(newElement)
@@ -159,19 +156,6 @@ class AddEditPlayers extends Component {
             formError: false,
             formdata: newFormdata
         })
-    }
-
-
-    successForm = (message) => {
-        this.setState({
-            formSuccess: message
-        });
-        setTimeout(()=>{
-            this.setState({
-                formSuccess:''
-            });
-        },2000)
-
     }
 
     submitForm(event){
@@ -222,8 +206,21 @@ class AddEditPlayers extends Component {
         })
     }
 
-    storeFilename = (filename) => {
+    storeFilename = (filename) => { // lưu hình lên store và đưa link url vào trong image
         this.updateForm({id:'image'},filename)
+    }
+
+
+    successForm = (message) => {
+        this.setState({
+            formSuccess: message
+        });
+        setTimeout(()=>{
+            this.setState({
+                formSuccess:''
+            });
+        },2000)
+
     }
 
     render() {
